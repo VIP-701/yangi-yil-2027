@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2027 – Yangi yil muborak</title>
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Onest:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg1:#0f1838;--bg2:#22336b;--ink:#f3f6fc;--mute:#aab7d8;--gold:#f2bb52;--ruby:#e0554c;--card:rgba(255,255,255,.08);--line:rgba(255,255,255,.2);--snow:255,255,255;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg1:#eaf1ff;--bg2:#c9d8f6;--ink:#14214a;--mute:#4a5a85;--gold:#a8680a;--ruby:#b8312a;--card:rgba(255,255,255,.65);--line:rgba(20,33,74,.22);--snow:90,120,190;color-scheme:light}}
+:root[data-theme="dark"]{--bg1:#0f1838;--bg2:#22336b;--ink:#f3f6fc;--mute:#aab7d8;--gold:#f2bb52;--ruby:#e0554c;--card:rgba(255,255,255,.08);--line:rgba(255,255,255,.2);--snow:255,255,255;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--bg1);background-image:radial-gradient(120% 80% at 50% 0%,var(--bg2),var(--bg1) 70%);color:var(--ink);font-family:"Onest",system-ui,sans-serif;line-height:1.55;text-align:center;overflow-x:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:clamp(28px,7vh,72px) 20px 48px}
+.lead{margin:0;color:var(--mute);font-size:1.05rem}
+h1{margin:.1em 0 0;font-family:"Gloock",Georgia,serif;font-weight:400;font-size:clamp(5.5rem,30vw,12rem);line-height:.95;letter-spacing:.01em;color:var(--gold);text-shadow:0 0 40px rgba(242,187,82,.35)}
+h1 span{display:inline-block;animation:rise .9s cubic-bezier(.2,.8,.2,1) both}
+h1 span:nth-child(2){animation-delay:.12s}h1 span:nth-child(3){animation-delay:.24s}h1 span:nth-child(4){animation-delay:.36s}
+@keyframes rise{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+.sub{margin:.4em 0 0;font-family:"Gloock",Georgia,serif;font-size:clamp(1.2rem,4.5vw,1.7rem);color:var(--ink)}
+.cd{display:flex;justify-content:center;margin:32px auto 0;max-width:520px}
+.cd div{flex:1;padding:6px 8px;border-left:1px solid var(--line)}
+.cd div:first-child{border-left:0}
+.cd b{display:block;font-family:"Gloock",Georgia,serif;font-weight:400;font-size:clamp(2rem,9vw,3.2rem);font-variant-numeric:tabular-nums;line-height:1.1}
+.cd small{color:var(--mute);font-size:.9rem}
+.note{margin:14px 0 0;color:var(--mute);font-size:.9rem}
+section{margin-top:52px;padding:28px 22px;background:var(--card);border:1px solid var(--line);border-radius:18px;backdrop-filter:blur(6px)}
+h2{margin:0 0 6px;font-family:"Gloock",Georgia,serif;font-weight:400;font-size:1.5rem}
+label{display:block;color:var(--mute);margin:16px 0 6px;text-align:left}
+input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--ink);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start}
+.chip,.btn{font:inherit;cursor:pointer;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);padding:9px 16px}
+.chip[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#241a05}
+.btn.main{background:var(--ruby);border-color:var(--ruby);color:#fff;font-weight:600}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.card{margin-top:26px;padding:28px 22px;border-radius:14px;border:2px solid var(--gold);background:linear-gradient(160deg,rgba(224,85,76,.22),rgba(242,187,82,.12))}
+.card p{margin:0;font-family:"Gloock",Georgia,serif;font-size:clamp(1.25rem,5vw,1.7rem);line-height:1.4}
+.card em{display:block;margin-top:14px;font-style:normal;color:var(--gold);font-size:1.05rem}
+footer{margin-top:34px;color:var(--mute);font-size:.9rem}
+@media (prefers-reduced-motion:reduce){h1 span{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="fx" aria-hidden="true"></canvas>
+<main>
+  <p class="lead" id="lead">Yangi yilgacha qoldi</p>
+  <h1 aria-label="2027"><span>2</span><span>0</span><span>2</span><span>7</span></h1>
+  <p class="sub">Yangi yilingiz bilan!</p>
+
+  <div class="cd" id="cd" role="timer" aria-live="off">
+    <div><b id="d">00</b><small>kun</small></div>
+    <div><b id="h">00</b><small>soat</small></div>
+    <div><b id="m">00</b><small>daqiqa</small></div>
+    <div><b id="s">00</b><small>soniya</small></div>
+  </div>
+  <p class="note" id="note">Toshkent vaqti bilan, 1-yanvar 00:00 gacha</p>
+
+  <section>
+    <h2>Tabrik yarating</h2>
+    <label for="nm">Kimga tabrik?</label>
+    <input id="nm" maxlength="40" placeholder="Ismni yozing, masalan: Dilshod" autocomplete="off">
+    <label id="wl">Nima tilaysiz?</label>
+    <div class="chips" role="group" aria-labelledby="wl" id="chips"></div>
+    <div class="card" aria-live="polite"><p id="txt"></p><em>Yangi yil muborak!</em></div>
+    <div class="row">
+      <button class="btn main" id="cp">Nusxa olish</button>
+      <button class="btn" id="fw">Salyut</button>
+    </div>
+  </section>
+  <footer>Baxtli, sog‘lom va barakali 2027 yil bo‘lsin.</footer>
+</main>
+
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)};
+var pad=function(n){return String(n).padStart(2,"0")};
+var target=Date.UTC(2026,11,31,19,0,0); // 1-yanvar 2027, 00:00 Toshkent (UTC+5)
+var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var fired=false;
+
+/* Tabrik */
+var wishes=["sog‘liq va tinchlik","omad va yangi marralar","oilaviy baxt va farovonlik","quvonch va mehr-oqibat"];
+var cur=0,chips=$("chips");
+wishes.forEach(function(w,i){
+  var b=document.createElement("button");b.className="chip";b.type="button";b.textContent=w;
+  b.setAttribute("aria-pressed",i===0);
+  b.onclick=function(){cur=i;[].forEach.call(chips.children,function(c,j){c.setAttribute("aria-pressed",j===i)});render()};
+  chips.appendChild(b);
+});
+function render(){
+  var n=$("nm").value.trim();
+  $("txt").textContent=(n?n+", ":"")+"2027 yil sizga "+wishes[cur]+" olib kelsin!";
+}
+$("nm").addEventListener("input",render);render();
+$("cp").onclick=function(){
+  var t=$("txt").textContent+" Yangi yil muborak!";
+  var ok=function(){$("cp").textContent="Nusxa olindi"; setTimeout(function(){$("cp").textContent="Nusxa olish"},1800)};
+  try{navigator.clipboard.writeText(t).then(ok,function(){})}catch(e){}
+};
+
+/* Hisoblagich */
+function tick(){
+  var ms=target-Date.now();
+  if(ms<=0){
+    $("lead").textContent="Yangi yil keldi!";$("cd").hidden=true;$("note").hidden=true;
+    if(!fired){fired=true;show()}
+    return;
+  }
+  var s=Math.floor(ms/1000);
+  $("d").textContent=pad(Math.floor(s/86400));
+  $("h").textContent=pad(Math.floor(s%86400/3600));
+  $("m").textContent=pad(Math.floor(s%3600/60));
+  $("s").textContent=pad(s%60);
+}
+tick();setInterval(tick,1000);
+
+/* Qor va salyut */
+var cv=$("fx"),ctx=cv.getContext("2d"),W,H,flakes=[],sparks=[];
+function size(){var r=window.devicePixelRatio||1;W=innerWidth;H=innerHeight;cv.width=W*r;cv.height=H*r;ctx.setTransform(r,0,0,r,0,0)}
+size();addEventListener("resize",size);
+for(var i=0;i<80;i++)flakes.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,r:Math.random()*2.2+.6,v:Math.random()*.7+.3,p:Math.random()*6});
+function burst(x,y){
+  var hue=[42,8,200,48,330][Math.floor(Math.random()*5)];
+  for(var i=0;i<46;i++){var a=Math.PI*2*i/46,sp=Math.random()*3.2+1.2;
+    sparks.push({x:x,y:y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,l:1,h:hue})}
+}
+function show(){for(var i=0;i<6;i++)setTimeout(function(){burst(Math.random()*W*.8+W*.1,Math.random()*H*.45+H*.1)},i*450)}
+$("fw").onclick=show;
+addEventListener("pointerdown",function(e){if(e.target.closest("input,button"))return;burst(e.clientX,e.clientY)});
+function loop(){
+  ctx.clearRect(0,0,W,H);
+  var sc=getComputedStyle(document.documentElement).getPropertyValue("--snow").trim()||"255,255,255";
+  ctx.fillStyle="rgba("+sc+",.75)";
+  if(!reduce)flakes.forEach(function(f){
+    f.y+=f.v;f.p+=.01;f.x+=Math.sin(f.p)*.4;
+    if(f.y>H){f.y=-4;f.x=Math.random()*W}
+    ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,6.3);ctx.fill();
+  });
+  sparks=sparks.filter(function(p){return p.l>0});
+  sparks.forEach(function(p){
+    p.x+=p.vx;p.y+=p.vy;p.vy+=.035;p.vx*=.99;p.l-=.014;
+    ctx.fillStyle="hsla("+p.h+",95%,62%,"+Math.max(p.l,0)+")";
+    ctx.beginPath();ctx.arc(p.x,p.y,2,0,6.3);ctx.fill();
+  });
+  requestAnimationFrame(loop);
+}
+loop();
+})();
+</script>
+</body>
+</html>
